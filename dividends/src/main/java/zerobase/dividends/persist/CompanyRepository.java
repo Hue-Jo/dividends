@@ -6,4 +6,5 @@ import zerobase.dividends.persist.entity.CompanyEntity;
 
 @Repository
 public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
+    boolean existsByTicker(String ticker);
 }

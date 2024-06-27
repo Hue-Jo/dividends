@@ -3,6 +3,7 @@ package zerobase.dividends.persist.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import zerobase.dividends.model.Company;
 
 import javax.persistence.*;
 
@@ -21,4 +22,8 @@ public class CompanyEntity {
 
     private String name;
 
+    public CompanyEntity(Company company) {
+        this.ticker = company.getTicker();
+        this.name = company.getName();
+    }
 }

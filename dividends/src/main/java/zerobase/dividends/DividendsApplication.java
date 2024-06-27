@@ -1,18 +1,19 @@
 package zerobase.dividends;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import zerobase.dividends.scraper.Scraper;
 import zerobase.dividends.scraper.YahooFinanceScraper;
 
-//@SpringBootApplication
+@SpringBootApplication
 public class DividendsApplication {
 
     public static void main(String[] args) {
-        //SpringApplication.run(DividendsApplication.class, args);
+        SpringApplication.run(DividendsApplication.class, args);
 
-        Scraper scrapper = new YahooFinanceScraper();
+        //Scraper scrapper = new YahooFinanceScraper();
         //var result = scrapper.scrap(Company.builder().ticker("O").build());
-        var result = scrapper.scrapCompanyByTicker("MMM");
-
-        System.out.println(result);
+        //var result = scrapper.scrapCompanyByTicker("MMM");
+        //System.out.println(result);
     }
 }
