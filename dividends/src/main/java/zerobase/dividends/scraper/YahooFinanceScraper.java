@@ -1,4 +1,4 @@
-package zerobase.dividends.scrapper;
+package zerobase.dividends.scraper;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -15,10 +15,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class YahooFinanceScrapper {
+public class YahooFinanceScraper implements Scraper{
     private static final String STATISTIC_URL = "https://finance.yahoo.com/quote/%s/history/?frequency=1mo&period1=%d&period2=%d";
+    private static final String SUMMARY_URL = "https://finance.yahoo.com/quote/%s/?p=%s";
     private static final long START_TIME = 86400; // 60 * 60 * 24
 
+    @Override
     public ScrapedResult scrap(Company company) {
         var scrapResult = new ScrapedResult();
         scrapResult.setCompany(company);
@@ -53,9 +55,9 @@ public class YahooFinanceScrapper {
                 }
 
                 dividends.add(Dividend.builder()
-                                    .date(LocalDateTime.of(year, month, day, 0, 0))
-                                    .dividend(dividend)
-                                    .build()
+                        .date(LocalDateTime.of(year, month, day, 0, 0))
+                        .dividend(dividend)
+                        .build()
                 );
 
                 //System.out.println(year + "/" + month + "/" + day + " -> " + dividend);
@@ -68,7 +70,23 @@ public class YahooFinanceScrapper {
         return scrapResult;
     }
 
+    @Override
     public Company scrapCompanyByTicker(String ticker) {
+        String url = String.format(SUMMARY_URL, ticker, ticker);
+
+        try {
+            Document document = Jsoup.connect(url).get();
+            Element titleEle = document.getElementsByClass("svelte-3a2v0c").get(0);
+            String title = titleEle.text();
+
+            return Company.builder()
+                    .ticker(ticker)
+                    .name(title)
+                    .build();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }
