@@ -1,6 +1,9 @@
 package zerobase.dividends.service;
 
+import javassist.compiler.ast.Keyword;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.Trie;
+import org.apache.commons.collections4.TrieUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class CompanyService {
 
+    private final Trie trie;
     private final Scraper yahooFinanceScraper;
     private final CompanyRepository companyRepository;
     private final DividendRepository dividendRepository;
@@ -61,5 +65,22 @@ public class CompanyService {
 
     public Page<CompanyEntity> getAllCompany(Pageable pageable) {
         return this.companyRepository.findAll(pageable);
+    }
+
+    // 저장
+    public void addAutoCompleteKeyword(String keyword) {
+        this.trie.put(keyword, null);
+    }
+
+    // 검색
+    public List<String> autoComplete(String keyword) {
+        return (List<String>) this.trie.prefixMap(keyword).keySet()
+                .stream()
+                .collect(Collectors.toList());
+    }
+
+    // 삭제
+    public void deleteAutoCompleteKeyword(String keyword) {
+        this.trie.remove(keyword);
     }
 }
