@@ -1,10 +1,9 @@
 package zerobase.dividends.service;
 
-import javassist.compiler.ast.Keyword;
 import lombok.AllArgsConstructor;
 import org.apache.commons.collections4.Trie;
-import org.apache.commons.collections4.TrieUtils;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
@@ -45,7 +44,7 @@ public class CompanyService {
 
         // ticker를 기준으로 회사 스크래핑
         Company company = this.yahooFinanceScraper.scrapCompanyByTicker(ticker);
-        if(ObjectUtils.isEmpty(company)) {
+        if (ObjectUtils.isEmpty(company)) {
             throw new RuntimeException("failed to scrap ticker -> " + ticker);
         }
 
@@ -56,8 +55,8 @@ public class CompanyService {
         CompanyEntity companyEntity = this.companyRepository.save(new CompanyEntity((company)));
         List<DividendEntity> dividendEntities =
                 scrapedResult.getDividends().stream()
-                .map(e -> new DividendEntity(companyEntity.getId(), e))
-                .collect(Collectors.toList());
+                        .map(e -> new DividendEntity(companyEntity.getId(), e))
+                        .collect(Collectors.toList());
 
         this.dividendRepository.saveAll(dividendEntities);
         return company;
@@ -72,10 +71,20 @@ public class CompanyService {
         this.trie.put(keyword, null);
     }
 
-    // 검색
+    // 검색 (자동완성)
     public List<String> autoComplete(String keyword) {
         return (List<String>) this.trie.prefixMap(keyword).keySet()
                 .stream()
+                .collect(Collectors.toList());
+    }
+
+    // (키워드 자동완성)
+    public List<String> getCompanyNamesByKeyword(String keyword) {
+        Pageable limit = PageRequest.of(0, 10);
+        Page<CompanyEntity> companyEntities =
+                this.companyRepository.findByNameStartingWithIgnoreCase(keyword, limit);
+        return companyEntities.stream()
+                .map(e -> e.getName())
                 .collect(Collectors.toList());
     }
 

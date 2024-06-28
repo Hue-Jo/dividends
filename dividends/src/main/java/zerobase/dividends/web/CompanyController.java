@@ -10,8 +10,6 @@ import zerobase.dividends.model.Company;
 import zerobase.dividends.persist.entity.CompanyEntity;
 import zerobase.dividends.service.CompanyService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/company")
 @AllArgsConstructor
@@ -21,7 +19,8 @@ public class CompanyController {
 
     @GetMapping("/autocomplete")
     public ResponseEntity<?> autocomplete(@RequestParam String keyword) {
-        var result = this.companyService.autoComplete(keyword);
+        //var result = this.companyService.autoComplete(keyword);
+        var result = this.companyService.getCompanyNamesByKeyword(keyword);
         return ResponseEntity.ok(result);
     }
 
