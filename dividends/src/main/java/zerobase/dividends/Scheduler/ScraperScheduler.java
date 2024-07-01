@@ -2,10 +2,12 @@ package zerobase.dividends.Scheduler;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import zerobase.dividends.model.Company;
 import zerobase.dividends.model.ScrapedResult;
+import zerobase.dividends.model.constants.CacheKey;
 import zerobase.dividends.persist.CompanyRepository;
 import zerobase.dividends.persist.DividendRepository;
 import zerobase.dividends.persist.entity.CompanyEntity;
@@ -34,6 +36,7 @@ public class ScraperScheduler {
 //        System.out.println(Thread.currentThread().getName() + " -> test 2 " + LocalDateTime.now());
 //    }
 
+    @CacheEvict(value = CacheKey.KEY_FINANCE, allEntries = true)
     @Scheduled(cron = "${scheduler.scrap.yahoo}")
     public void yahooFinanceScheduling() {
         log.info("scraping scheduler is started");
@@ -41,16 +44,15 @@ public class ScraperScheduler {
         List<CompanyEntity> companies = this.companyRepository.findAll();
         // 회사마다 배당금 정보 새로 스크래핑
         for(var company : companies) {
-            ScrapedResult scrapedResult = this.yahooFinanceScraper.scrap(Company.builder()
-                    .name(company.getName())
-                    .ticker(company.getTicker())
-                    .build());
+            ScrapedResult scrapedResult
+                    = this.yahooFinanceScraper
+                            .scrap(new Company(company.getTicker(), company.getName()));
 
             // 스크래핑한 정보 중 DB에 없는 값은 저장하기
             scrapedResult.getDividends().stream()
                     // dividend 모델을 엔티티로 매핑
                     .map(e -> new DividendEntity(company.getId(), e))
-                    // 각 요소들을 하나씩 dividene 레파지토리에 삽입
+                    // 각 요소들을 하나씩 dividend 레파지토리에 삽입
                     .forEach(e -> {
                         boolean exists = this.dividendRepository
                                             .existsByCompanyIdAndDate(e.getCompanyId(), e.getDate());
