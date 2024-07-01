@@ -38,7 +38,16 @@ public class MemberService implements UserDetailsService {
     }
 
     // 로그인
-    public MemberEntity authenticate(Auth.SignIn signIn) {
-        return null;
+    public MemberEntity authenticate(Auth.SignIn member) {
+
+        var user = this.memberRepository.findByUsername(member.getUsername())
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 아이디입니다."));
+
+        if (this.passwordEncoder.matches(member.getPassword(), user.getPassword())) {
+            throw new RuntimeException("비번이 일치하지 않습니다. ");
+        }
+
+        return user;
+
     }
 }
