@@ -6,6 +6,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
+import zerobase.dividends.exception.impl.NoCompanyException;
 import zerobase.dividends.model.Company;
 import zerobase.dividends.model.Dividend;
 import zerobase.dividends.model.ScrapedResult;
@@ -38,7 +39,7 @@ public class FinanceService {
         // 1. 회사명을 기준으로 회사정보 조회
         CompanyEntity company = this.companyRepository
                 .findByName(companyName)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회사명입니다"));
+                .orElseThrow(() -> new NoCompanyException());
 
         // 2. 조회된 회사 아이디로 배당금 조회
         List<DividendEntity> dividendEntities = this.dividendRepository
