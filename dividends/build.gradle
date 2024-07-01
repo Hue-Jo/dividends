@@ -30,7 +30,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation 'org.jsoup:jsoup:1.15.3'
-    implementation 'io.jsonwebtoken:jjwt:0.11.2' // 사용자 인증 및 식별에 사용되는 토큰
+    implementation 'io.jsonwebtoken:jjwt:0.9.1' // 사용자 인증 및 식별에 사용되는 토큰
     implementation 'org.apache.commons:commons-collections4:4.4'
 
     compileOnly 'org.projectlombok:lombok'
