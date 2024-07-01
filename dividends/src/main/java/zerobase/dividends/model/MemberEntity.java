@@ -11,19 +11,20 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Builder
+
 @Getter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "Member")
+@Builder
 public class MemberEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userName;
+    private String username;
 
     @JsonIgnore
     private String password;
@@ -38,11 +39,6 @@ public class MemberEntity implements UserDetails {
                 .stream()
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public String getUsername() {
-        return "";
     }
 
     @Override

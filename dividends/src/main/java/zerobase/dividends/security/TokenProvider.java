@@ -5,7 +5,6 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
-import org.jsoup.internal.StringUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -30,10 +29,7 @@ public class TokenProvider {
     private String secretKey;
 
     /**
-     * 토큰 생성
-     * @param username
-     * @param roles
-     * @return
+     * 토큰 생성&발급
      */
     public String generateToken(String username, List<String> roles) {
         Claims claims = Jwts.claims().setSubject(username);

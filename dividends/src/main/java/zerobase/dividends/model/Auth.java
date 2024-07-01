@@ -20,7 +20,7 @@ public class Auth {
 
         public MemberEntity toEntity() {
             return MemberEntity.builder()
-                                .userName(this.username)
+                                .username(this.username)
                                 .password(this.password)
                                 .roles(this.roles)
                                 .build();
