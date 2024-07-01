@@ -16,6 +16,8 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, Long> {
     // Optional을 쓰는 이유 = NullPointException 방지, 값이 없는 경우에도 깔끔한 코드 구현 가능
     Optional<CompanyEntity> findByName(String name);
 
+    Optional<CompanyEntity> findByTicker(String ticker);
+
     Page<CompanyEntity> findByNameStartingWithIgnoreCase(String s, Pageable pageable);
 
 }
