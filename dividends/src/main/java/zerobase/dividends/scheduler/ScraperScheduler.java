@@ -1,4 +1,4 @@
-package zerobase.dividends.Scheduler;
+package zerobase.dividends.scheduler;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,6 @@ import zerobase.dividends.persist.entity.CompanyEntity;
 import zerobase.dividends.persist.entity.DividendEntity;
 import zerobase.dividends.scraper.Scraper;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Slf4j
@@ -57,7 +56,8 @@ public class ScraperScheduler {
                         boolean exists = this.dividendRepository
                                             .existsByCompanyIdAndDate(e.getCompanyId(), e.getDate());
                         if (!exists) {
-                            this.dividendRepository.save(e);
+                            this.dividendRepository.save(e); // 새로운 배당금 정보 저장
+                            log.info("insert new dividend -> " + e.toString());
                         }
                     });
             // 연속적으로 스크래핑 대상 사이트 서버에 요청을 날리지 않도록 일시정지 (스레드 슬립)

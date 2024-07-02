@@ -37,6 +37,7 @@ public class AuthController {
 
         // 토큰 생성 & 반환
         var token = this.tokenProvider.generateToken(member.getUsername(), member.getRoles());
+        log.info("user login -> " + request.getUsername()); // 사용자가 로그인 했을 때 기록 남기기
         return ResponseEntity.ok(token);
     }
 }
