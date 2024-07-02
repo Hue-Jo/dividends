@@ -2,7 +2,6 @@ package zerobase.dividends.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import zerobase.dividends.persist.DividendRepository;
 import zerobase.dividends.persist.entity.CompanyEntity;
 import zerobase.dividends.persist.entity.DividendEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
