@@ -59,7 +59,6 @@ public class YahooFinanceScraper implements Scraper{
                 dividends.add(new Dividend(LocalDateTime.of(year, month, day, 0, 0), splits[0])
                 );
 
-                //System.out.println(year + "/" + month + "/" + day + " -> " + dividend);
             }
             scrapResult.setDividends(dividends);
 

@@ -25,15 +25,6 @@ public class ScraperScheduler {
     private final DividendRepository dividendRepository;
     private final Scraper yahooFinanceScraper;
 
-//    @Scheduled(fixedDelay = 1000)
-//    public void test1() throws InterruptedException {
-//        Thread.sleep(10000); // 10초간 일시정지
-//        System.out.println(Thread.currentThread().getName() + " -> test 1 " + LocalDateTime.now());
-//    }
-//    @Scheduled(fixedDelay = 1000)
-//    public void test2() {
-//        System.out.println(Thread.currentThread().getName() + " -> test 2 " + LocalDateTime.now());
-//    }
 
     @CacheEvict(value = CacheKey.KEY_FINANCE, allEntries = true)
     @Scheduled(cron = "${scheduler.scrap.yahoo}")

@@ -44,17 +44,19 @@ public class FinanceService {
                 .findAllByCompanyId(company.getId());
 
         // 3. scrapedResult로 결과 반환
-//        List<Dividend> dividends = new ArrayList<>();
+
+        List<Dividend> dividends = dividendEntities
+                .stream()
+                .map(e -> new Dividend(e.getDate(), e.getDividend()))
+                .collect(Collectors.toList());
+
+//      List<Dividend> dividends = new ArrayList<>();
 //        for (var entity : dividendEntities) {
 //            dividends.add(Dividend.builder()
 //                                    .date(entity.getDate())
 //                                    .dividend(entity.getDividend())
 //                                    .build());
 //        }
-        List<Dividend> dividends = dividendEntities
-                .stream()
-                .map(e -> new Dividend(e.getDate(), e.getDividend()))
-                .collect(Collectors.toList());
 
         return new ScrapedResult(
                 new Company(company.getTicker(), company.getName()), dividends);
