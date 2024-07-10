@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import zerobase.dividends.exception.impl.AlreadyExistUserException;
 import zerobase.dividends.model.Auth;
-import zerobase.dividends.model.MemberEntity;
+import zerobase.dividends.persist.entity.MemberEntity;
 import zerobase.dividends.persist.MemberRepository;
 
 @Slf4j

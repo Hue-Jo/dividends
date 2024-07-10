@@ -1,6 +1,7 @@
 package zerobase.dividends.model;
 
 import lombok.Data;
+import zerobase.dividends.persist.entity.MemberEntity;
 
 import java.util.List;
 

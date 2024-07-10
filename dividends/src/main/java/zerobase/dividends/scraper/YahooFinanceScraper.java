@@ -35,9 +35,17 @@ public class YahooFinanceScraper implements Scraper{
             Document document = connection.get();
 
             Elements parsingDivs = document.getElementsByClass("table svelte-ewueuo");
-            Element tableEle = parsingDivs.get(0); // table 전체
 
+            if (parsingDivs.isEmpty()) {
+                throw new RuntimeException("'table svelte-ewueuo'와 같은 클래스의 테이블은 존재하지 않습니다.");
+            }
+
+            Element tableEle = parsingDivs.get(0); // table 전체
             Element tbody = tableEle.getElementsByTag("tbody").first();
+
+            if (tbody == null || tbody.children().isEmpty()) {
+                throw new RuntimeException("table에 해당 정보가 존재하지 않습니다.");
+            }
 
             List<Dividend> dividends = new ArrayList<>();
             for (Element e : tbody.children()) {

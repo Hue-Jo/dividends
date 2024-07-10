@@ -2,7 +2,7 @@ package zerobase.dividends.persist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import zerobase.dividends.model.MemberEntity;
+import zerobase.dividends.persist.entity.MemberEntity;
 
 import java.util.Optional;
 

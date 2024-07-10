@@ -90,7 +90,7 @@ public class CompanyService {
     }
 
     // 삭제
-    public void deleteAutoCompleteKeyword(String keyword) {
+    private void deleteAutoCompleteKeyword(String keyword) {
         this.trie.remove(keyword);
     }
 

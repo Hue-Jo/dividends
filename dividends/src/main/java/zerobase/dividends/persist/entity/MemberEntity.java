@@ -1,4 +1,4 @@
-package zerobase.dividends.model;
+package zerobase.dividends.persist.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;

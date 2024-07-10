@@ -1,8 +1,9 @@
 package zerobase.dividends.exception;
 
-public abstract class AbstractException extends RuntimeException{
+public abstract class AbstractException extends RuntimeException {
 
-    abstract public int getStatusCode();
+    public abstract int getStatusCode();
 
-    abstract public String getMessage();
+    @Override
+    public abstract String getMessage();
 }
